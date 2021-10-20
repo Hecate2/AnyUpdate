@@ -22,7 +22,7 @@ client = TestClient(target_url, contract_hash, wallet_hash, wallet_address, 'tes
 client.openwallet()
 client.invokefunction('putStorage', params=["testKey", "testValue"])
 sleep_for_next_block()
-client.invokefunction('anyUpdate0', params=[nef_file, manifest, 'helloNeo'])
+client.invokefunction('anyUpdate1', params=[nef_file, manifest, 'hello1', 1])
 client.print_previous_result()
 sleep_for_next_block()
 client.invokefunction('anyUpdate0', params=[nef_file, manifest, 'helloNeo'])

@@ -1,3 +1,4 @@
+from typing import Any
 from boa3.builtin import NeoMetadata, metadata, public
 
 
@@ -13,3 +14,8 @@ def manifest_metadata() -> NeoMetadata:
 @public
 def helloNeo() -> str:
     return "Hello Neo!"
+
+
+@public
+def hello1(arg1: Any) -> Any:
+    return arg1
