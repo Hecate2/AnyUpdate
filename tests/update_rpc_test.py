@@ -20,8 +20,13 @@ with open('../AnyContract.manifest.json', 'r') as f:
 
 client = TestClient(target_url, contract_hash, wallet_hash, wallet_address, 'testnet.json', '1')
 client.openwallet()
+client.invokefunction('putStorage', params=["testKey", "testValue"])
+sleep_for_next_block()
 client.invokefunction('anyUpdate0', params=[nef_file, manifest, 'helloNeo'])
 client.print_previous_result()
 sleep_for_next_block()
 client.invokefunction('anyUpdate0', params=[nef_file, manifest, 'helloNeo'])
+client.print_previous_result()
+sleep_for_next_block()
+client.invokefunction('getStorage', params=["testKey"], relay=False)
 client.print_previous_result()
