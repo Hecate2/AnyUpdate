@@ -20,3 +20,7 @@ The contract is built with the following steps (Python 3.8 recommended):
 2. Record the raw `AnyUpdate.nef` file and `AnyUpdate.manifest.json`. You may refer to `engine.raw_nef` printed in `AnyUpdate/tests/update_test.py`. It is recommended to compress the json to save your GAS for deployment. 
 3. Recover the `_deploy` method in `AnyUpdate.py`, filling the value of `original_nef_file` with the raw nef file, and `original_manifest` with the raw manifest json. 
 4. Compile with `neo3-boa AnyUpdate.py` again and deploy the new `AnyUpdate.nef`!
+
+#### Why do I use `get` and `put` but do not write fixed bytes of nef and json?
+
+If I did write fixed nef and json, then I have to place the content of the whole program in a part of the program itself. This is impossible. 
