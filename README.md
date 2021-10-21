@@ -24,3 +24,7 @@ The contract is built with the following steps (Python 3.8 recommended):
 #### Why do I use `get` and `put` but do not write fixed bytes of nef and json?
 
 If I did write fixed nef and json, then I have to place the content of the whole program in a part of the program itself. This is impossible. 
+
+#### Save more GAS...
+
+For example, if your contract's methods need only 0 or 1 or 4 arguments (which is the case of basic NEP-17 contracts), you can deploy your own `AnyUpdate014.nef` deleting the methods for 2,3,5,6,7 arguments. Tell us the scripthash of your simplified contract if you would like to!
