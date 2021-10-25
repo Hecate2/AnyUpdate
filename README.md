@@ -28,3 +28,5 @@ If I did write fixed nef and json, then I have to place the content of the whole
 #### Save more GAS...
 
 For example, if your contract's methods need only 0 or 1 or 4 arguments (which is the case of basic NEP-17 contracts), you can deploy your own `AnyUpdate014.nef` deleting the methods for 2,3,5,6,7 arguments. Tell us the scripthash of your simplified contract if you would like to!
+
+Additionally, if the length (in bytes) of your contract is approximately the same as mine, your GAS is saved according to [docs about GAS fees](https://docs.neo.org/docs/en-us/reference/fees.html#storage-fee).
