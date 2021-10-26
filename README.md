@@ -1,6 +1,6 @@
 Not willing to deploy a new smart contract on Neo at a cost of 10 GAS? Use https://github.com/Hecate2/AnyUpdate that updates my contract to be yours, and invoke your own function!  
 
-The leading actor in this repo is `AnyUpdate.py`. Try it now at `0x92be0911dd55671a69362c807dc2c452404834c0` on the testnet!
+The leading actor in this repo is `AnyUpdate.py`. Try it now at `0x7882ab97bb1d89b5bdcbbc50be1cc981eb594aeb` on the testnet!
 
 This contract is expected to be a free public service, as well as an amazing showcase of smart contract self-updating. You may store anything in the contract (but the values might be overwritten by others). **Please do not overwrite the keys `original_nef_file` and `original_manifest` in the storage.**
 

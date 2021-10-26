@@ -17,7 +17,7 @@ print(cut_nef_without_checksum)
 checksum = hashlib.sha256(hashlib.sha256(cut_nef_without_checksum).digest()).digest()[:4]
 print(cut_nef_without_checksum + checksum)
 print(engine.raw_nef)
-print(json.dumps(engine.raw_manifest))
+print(json.dumps(engine.raw_manifest, separators=(',', ':')))
 
 engine._deploy_with_print([None, False])
 engine.anyUpdate0_with_print([nef_file, manifest, 'helloNeo'])
