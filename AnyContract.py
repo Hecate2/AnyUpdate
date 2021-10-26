@@ -1,5 +1,6 @@
 from typing import Any
 from boa3.builtin import NeoMetadata, metadata, public
+from boa3.builtin.interop.storage import put
 
 
 @metadata
@@ -19,3 +20,8 @@ def helloNeo() -> str:
 @public
 def hello1(arg1: Any) -> Any:
     return arg1
+
+
+@public
+def putNef():
+    put(b'original_nef_file', b'NO_NEF')
