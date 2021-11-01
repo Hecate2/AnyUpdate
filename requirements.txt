@@ -1,4 +1,4 @@
 decorator==5.0.9
 neo3_boa==0.8.2
 requests==2.25.1
-neo_mamba==0.8
+neo_mamba==0.9
