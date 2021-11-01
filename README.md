@@ -6,6 +6,8 @@ This contract is expected to be a free public service, as well as an amazing sho
 
 Also `AnyUpdateSafe.py` is provided on the testnet at `0x52aabe7814458f83eb8197dcce68ff30597c37d3`. You can write on any key safely with this contract, though overwriting the keys `original_nef_file` and `original_manifest` is noneffective. `AnyUpdateSafe` costs more GAS than `AnyUpdate`.
 
+Then `AnyUpdateShort.py` on testnet at `0x643a7a9bb8e051ed35546ce146982a7ca9468c5f` gives a flexible way to give arguments to your methods. Note that a shorter contract does not always save your fee. Usually the fee is minimized when the length of my contract is close to that of yours. 
+
 The test `tests/update_test.py`  using `Neo3vm` will not succeed because `_deploy` is an invalid method name. So just try an RPC test!
 
 The test suite in this repository will not be maintained in the future, because it is a duplicate of that in https://github.com/Hecate2/neo-ruler/ . 
