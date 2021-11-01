@@ -2,13 +2,13 @@ from neo_test_with_vm import TestEngine
 import json, hashlib
 
 
-engine = TestEngine('../AnyUpdate.nef')
+engine = TestEngine('../AnyUpdateShortSafe.nef')
 
 with open('../AnyContract.nef', 'rb') as f:
     nef_file = f.read()
 with open('../AnyContract.manifest.json', 'r') as f:
     manifest_dict = json.loads(f.read())
-    manifest_dict['name'] = 'AnyUpdate'
+    manifest_dict['name'] = 'AnyUpdateShortSafe'
     manifest = json.dumps(manifest_dict, separators=(',', ':'))
 
 print(engine.manifest.abi.methods[-1].offset)
@@ -19,7 +19,7 @@ print(cut_nef_without_checksum + checksum)
 print(engine.raw_nef)
 print(json.dumps(engine.raw_manifest, separators=(',', ':')))
 
-engine._deploy_with_print([None, False])
+# engine._deploy_with_print([None, False])
 engine.anyUpdate0_with_print([nef_file, manifest, 'helloNeo'])
 engine.anyUpdate0_with_print([nef_file, manifest, 'helloNeo'])
 engine.anyUpdate0_with_print([nef_file, manifest, 'helloNeo'])
