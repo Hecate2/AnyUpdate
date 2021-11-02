@@ -6,7 +6,9 @@ This contract is expected to be a free public service, as well as an amazing sho
 
 Also `AnyUpdateSafe.py` is provided on the testnet at `0x52aabe7814458f83eb8197dcce68ff30597c37d3`. You can write on any key safely with this contract, though overwriting the keys `original_nef_file` and `original_manifest` is noneffective. `AnyUpdateSafe` costs more GAS than `AnyUpdate`.
 
-Then `AnyUpdateShort.py` on testnet at `0x643a7a9bb8e051ed35546ce146982a7ca9468c5f` gives a flexible way to give arguments to your methods. Note that a shorter contract does not always save your fee. Usually the fee is minimized when the length of my contract is close to that of yours. 
+Then `AnyUpdateShort.py` on testnet at `0x643a7a9bb8e051ed35546ce146982a7ca9468c5f` gives a flexible way to give arguments to your methods. Note that a shorter contract does not always save your fee. Usually the fee is minimized when the length of my contract is close to that of yours.  We also have `AnyUpdateShortSafe.py` on testnet at `0x2bf858b5c244a6cb5463a90c8c5595cc5a872bc7`.
+
+Finally there is an experimental project `AnyUpdateRenter.py` (`0x9cf19e43333a0b4513bd61e2316b40ecb9454a9b` on testnet) which allows you to rent contracts defined by `AnyUpdateSafeForRent.py` (Only 1 instance on testnet 0`0xb82bb0da46129f219d657cb6d7fbb22415efc502` for now).
 
 The test `tests/update_test.py`  using `Neo3vm` will not succeed because `_deploy` is an invalid method name. So just try an RPC test!
 
