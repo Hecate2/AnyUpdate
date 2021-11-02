@@ -112,11 +112,13 @@ def requestRental(payer: UInt160, tenant: UInt160, rental_time: int) -> UInt160:
     while iterator.next():
         expire_time = cast(bytes, iterator.value[1]).to_int()
         if expire_time < time:
+            context = get_context()
             assert call_contract(GAS, 'transfer', [payer, executing_script_hash, cast(int, get(b'price')) * rental_time, None])
             key_bytes = cast(bytes, iterator.value[0])
             key_bytes = key_bytes[6:]  # remove b'expire' at the beginning of the key
-            rented_contract = cast(UInt160, StorageMap(get_context(), b'address').get(key_bytes))
+            rented_contract = cast(UInt160, StorageMap(context, b'address').get(key_bytes))
             new_expire_time = time + rental_time
+            StorageMap(context, b'expire').put(key_bytes, new_expire_time)
             call_contract(rented_contract, 'setTenant', [tenant, new_expire_time])
             return rented_contract
     raise Exception('No contract available')
