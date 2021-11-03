@@ -1,9 +1,9 @@
 from tests.utils import Hash160Str
 
-contract_hash = Hash160Str('0x7882ab97bb1d89b5bdcbbc50be1cc981eb594aeb')
-safe_contract_hash = Hash160Str('0x52aabe7814458f83eb8197dcce68ff30597c37d3')
-short_contract_hash = Hash160Str('0x643a7a9bb8e051ed35546ce146982a7ca9468c5f')
-short_safe_contract_hash = Hash160Str('0x2bf858b5c244a6cb5463a90c8c5595cc5a872bc7')
+contract_hash = Hash160Str('0x68740b907e4fcb265c5ad339c38251b6f843577a')
+safe_contract_hash = Hash160Str('0xb0b0d4bad5a8c17967ee30d997f0f1759c742402')
+short_contract_hash = Hash160Str('0x01918c892feb3056994aa4f70640d7b978eb2c5d')
+short_safe_contract_hash = Hash160Str('0xbb0bfd9b5f1cdab4318012ff80b6f0c51778a2d4')
 renter_contract_hash = Hash160Str('0x9cf19e43333a0b4513bd61e2316b40ecb9454a9b')
 _ = bytearray(bytes.fromhex(renter_contract_hash.string[2:]))
 _.reverse()
