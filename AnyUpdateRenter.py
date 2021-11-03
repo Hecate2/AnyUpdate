@@ -6,6 +6,7 @@ from boa3.builtin.interop.runtime import time, executing_script_hash, calling_sc
 from boa3.builtin.interop.storage import get, put, find, StorageMap, get_context
 from boa3.builtin.type import UInt160
 
+context = get_context()
 
 """
 Rent an AnyUpdateSafeForRent contract to enjoy exclusive writing permission!
@@ -83,7 +84,6 @@ def registerContract(i: int, address: UInt160):
         The owner of registered AnyUpdateSafeForRent should be this AnyUpdateRenter
     """
     assert check_witness(cast(UInt160, get(b'owner')))
-    context = get_context()
     i_bytes = i.to_bytes()
     StorageMap(context, b'address').put(i_bytes, address)
     StorageMap(context, b'expire').put(i_bytes, 0)
@@ -92,7 +92,6 @@ def registerContract(i: int, address: UInt160):
 @public
 def unregisterContract(i: int):
     assert check_witness(cast(UInt160, get(b'owner')))
-    context = get_context()
     i_bytes = i.to_bytes()
     StorageMap(context, b'address').delete(i_bytes)
     StorageMap(context, b'expire').delete(i_bytes)
@@ -108,7 +107,7 @@ def readContractExpire() -> Iterator:
     """
     The expiry timestamps of contracts for renting
     """
-    return find(b'expire', get_context())
+    return find(b'expire', context)
 
 
 @public
@@ -116,7 +115,7 @@ def readContractAddress() -> Iterator:
     """
     The addresses of contracts for renting
     """
-    return find(b'address', get_context())
+    return find(b'address', context)
 
 
 @public
@@ -142,7 +141,6 @@ def requestRental(payer: UInt160, tenant: UInt160, rental_time: int) -> UInt160:
     while iterator.next():
         expire_time = cast(bytes, iterator.value[1]).to_int()
         if expire_time < time:
-            context = get_context()
             assert call_contract(GAS, 'transfer', [payer, executing_script_hash, cast(int, get(b'price')) * rental_time, None])
             key_bytes = cast(bytes, iterator.value[0])
             key_bytes = key_bytes[6:]  # remove b'expire' at the beginning of the key
