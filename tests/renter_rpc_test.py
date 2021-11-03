@@ -1,6 +1,6 @@
 import json
 
-from tests.config import renter_contract_hash, contract_for_rent_hash
+from tests.config import renter_contract_hash, contract_for_rent_hash, contract_for_rent_hash1
 
 from neo_test_with_rpc import TestClient
 from tests.utils import Hash160Str, sleep_for_next_block, Signer, WitnessScope
@@ -28,7 +28,7 @@ client.invokefunction('requestRental', params=[wallet_hash, -1], do_not_raise_on
 client.invokefunction('readContractAddress', relay=False)
 client.print_previous_result()
 client.invokefunction('registerContract', params=[0, contract_for_rent_hash])
-client.invokefunction('registerContract', params=[1, contract_for_rent_hash])
+client.invokefunction('registerContract', params=[1, contract_for_rent_hash1])
 sleep_for_next_block()
 client.invokefunction('readContractAddress', relay=False)
 client.print_previous_result()

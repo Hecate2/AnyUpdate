@@ -8,7 +8,7 @@ Also `AnyUpdateSafe.py` is provided on the testnet at `0xb0b0d4bad5a8c17967ee30d
 
 Then `AnyUpdateShort.py` on testnet at `0x01918c892feb3056994aa4f70640d7b978eb2c5d` (with `findStorage` method supported!) gives a flexible way to give arguments to your methods. Note that a shorter contract does not always save your fee. Usually the fee is minimized when the length of my contract is close to that of yours.  We also have `AnyUpdateShortSafe.py` on testnet at `0xbb0bfd9b5f1cdab4318012ff80b6f0c51778a2d4`.
 
-Finally there is an experimental project `AnyUpdateRenter.py` (`0x9cf19e43333a0b4513bd61e2316b40ecb9454a9b` on testnet) which allows you to rent contracts defined by `AnyUpdateSafeForRent.py` (Only 1 instance on testnet 0`0xb82bb0da46129f219d657cb6d7fbb22415efc502` for now).
+Finally there is an experimental project `AnyUpdateRenter.py` (`0x9cf19e43333a0b4513bd61e2316b40ecb9454a9b` on testnet) which allows you to rent contracts defined by `AnyUpdateSafeForRent.py` (instance 1 on testnet `0xb82bb0da46129f219d657cb6d7fbb22415efc502` that does not `findStorage`, instance 2 on testnet `0x6d13f393c90fa7182974a2b4d212e82bd0ccaf24` that supports `findStorage`).
 
 The test `tests/update_test.py`  using `Neo3vm` will not succeed because `_deploy` is an invalid method name. So just try an RPC test!
 
