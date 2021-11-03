@@ -7,6 +7,17 @@ from boa3.builtin.interop.storage import get, put, find, StorageMap, get_context
 from boa3.builtin.type import UInt160
 
 
+"""
+Rent an AnyUpdateSafeForRent contract to enjoy exclusive writing permission!
+Storage:
+    key    ||       value
+address[i]    UInt160 script hash of AnyUpdateSafeForRent contracts
+expire[i]     timestamp (millisecond) of the rental expiry of each AnyUpdateSafeForRent contract
+owner         UInt160 script hash of the owner of this AnyUpdateRenter
+price         amount of GAS (*1e-8) to pay for each millisecond of rental
+"""
+
+
 @metadata
 def manifest_metadata() -> NeoMetadata:
     meta = NeoMetadata()
@@ -16,16 +27,22 @@ def manifest_metadata() -> NeoMetadata:
     return meta
 
 
+@public
+def _deploy(data: Any, _update: bool):
+    if not _update:
+        put(b'owner', UInt160(b'\xa5\xb7QTKV\xdf\xd22\xe0\xea+\x8e\x0c\x9aG\xa2?\x98\xb1'))
+        put(b'price', 1)  # 1*1e-8 GAS per millisecond; 0.864 GAS per day
+
+
 """
 Owner's methods
 """
 
 
 @public
-def _deploy(data: Any, _update: bool):
-    if not _update:
-        put(b'owner', UInt160(b'\xa5\xb7QTKV\xdf\xd22\xe0\xea+\x8e\x0c\x9aG\xa2?\x98\xb1'))
-        put(b'price', 1)  # 1*1e-8 GAS per millisecond; 0.864 GAS per day
+def update(script: bytes, manifest: bytes, data: Any):
+    assert check_witness(cast(UInt160, get(b'owner')))
+    update_contract(script, manifest, data)
 
 
 @public
@@ -36,15 +53,10 @@ def setOwner(new_owner: UInt160):
 
 
 @public
-def update(script: bytes, manifest: bytes, data: Any):
-    assert check_witness(cast(UInt160, get(b'owner')))
-    update_contract(script, manifest, data)
-
-
-@public
 def setPricePerBlock(price: int):
     """
     :param price: how many GAS (1e8) to pay for 1 block
+          setting price == 1 means 1*1e-8 GAS per millisecond; 0.864 GAS per day
     """
     assert check_witness(cast(UInt160, get(b'owner')))
     put(b'price', price)
@@ -52,12 +64,24 @@ def setPricePerBlock(price: int):
 
 @public
 def withdraw(to: UInt160, amount: int):
+    """
+    Allows to get the GAS fees stored in this contract
+    :param to: where to send the GAS to
+    :param amount: how much GAS to send
+    """
     assert check_witness(cast(UInt160, get(b'owner')))
     assert call_contract(GAS, 'transfer', [executing_script_hash, to, amount, None])
 
 
 @public
 def registerContract(i: int, address: UInt160):
+    """
+    register a new contract's scripthash to be rented by tenants
+    :param i: The key to store this contract.
+        Owner should be aware not to overwrite other keys
+    :param address: scripthash of AnyUpdateSafeForRent contract.
+        The owner of registered AnyUpdateSafeForRent should be this AnyUpdateRenter
+    """
     assert check_witness(cast(UInt160, get(b'owner')))
     context = get_context()
     i_bytes = i.to_bytes()
@@ -81,11 +105,17 @@ Methods for everyone
 
 @public
 def readContractExpire() -> Iterator:
+    """
+    The expiry timestamps of contracts for renting
+    """
     return find(b'expire', get_context())
 
 
 @public
 def readContractAddress() -> Iterator:
+    """
+    The addresses of contracts for renting
+    """
     return find(b'address', get_context())
 
 

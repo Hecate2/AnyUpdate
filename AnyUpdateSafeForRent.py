@@ -6,6 +6,23 @@ from boa3.builtin.interop.storage import get, put
 from boa3.builtin.type import UInt160
 
 
+"""
+Storage:
+    key    ||       value
+_tenant       who is renting this contract. Can be written by the owner and the tenant
+              and even the public (when this contract is not rented by anyone)
+              The tenant is allowed to overwrite on this key to assign another tenant
+_expire       timestamp (millisecond) of the rental expiry. Can be written by the owner.
+              If time > read(b'_expire'), then the rental has expired
+              and the contract can be used by the public
+_owner        UInt160 script hash of the owner of this AnyUpdateSafeForRent
+              Typically it should be the script hash of an AnyUpdateRenter
+              Overwriting forbidden
+_nef_file     the nef file for the contract to be rolled back. Overwriting forbidden
+_manifest     the manifest for the contract to be rolled back. Overwriting forbidden
+"""
+
+
 @metadata
 def manifest_metadata() -> NeoMetadata:
     meta = NeoMetadata()
@@ -25,10 +42,13 @@ def setTenant(tenant: UInt160, expire_timestamp_millisecond: int):
 @public
 def checkTenant():
     if time < cast(int, get(b'_expire')):
+        # this contract is being rented by the tenant
         if not check_witness(cast(UInt160, get(b'_tenant'))):
             raise Exception('No witness from tenant')
-        # else this contract is being called by the tenant
-    # else this contract is public for anyone to use
+        # else:
+        #     this contract is being called by the tenant
+    # else:
+    #     this contract is public for anyone to use
 
 
 @public
@@ -42,6 +62,7 @@ def putStorage(key: bytes, value: bytes):
     if key == b'_nef_file' or key == b'_manifest'\
             or key == b'_owner' or key == b'_expire':
         # b'_tenant' is allowed to be re-written by the current tenant
+        # Therefore the tenant can re-assign another tenant with this method
         raise Exception('Key not allowed')
     put(key, value)
 
