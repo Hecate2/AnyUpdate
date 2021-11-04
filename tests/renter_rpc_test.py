@@ -1,6 +1,6 @@
 import json
 
-from tests.config import renter_contract_hash, contract_for_rent_hash, contract_for_rent_hash1
+from tests.config import renter_contract_hash, contract_for_rent_hash0, contract_for_rent_hash1, contract_for_rent_hash2
 
 from neo_test_with_rpc import TestClient
 from tests.utils import Hash160Str, sleep_for_next_block, Signer, WitnessScope
@@ -27,8 +27,9 @@ client.invokefunction('setOwner', params=[wallet_hash], relay=False)
 client.invokefunction('requestRental', params=[wallet_hash, -1], do_not_raise_on_result=True, relay=False)
 client.invokefunction('readContractAddress', relay=False)
 client.print_previous_result()
-client.invokefunction('registerContract', params=[0, contract_for_rent_hash])
+client.invokefunction('registerContract', params=[0, contract_for_rent_hash0])
 client.invokefunction('registerContract', params=[1, contract_for_rent_hash1])
+client.invokefunction('registerContract', params=[2, contract_for_rent_hash2])
 sleep_for_next_block()
 client.invokefunction('readContractAddress', relay=False)
 client.print_previous_result()
@@ -40,14 +41,14 @@ client.invokefunction('requestRental', params=[wallet_hash, wallet_hash, -1], re
 client.invokefunction('requestRental', params=[wallet_hash, wallet_hash, 100000], signers=[signer])
 client.print_previous_result()
 sleep_for_next_block()
-client.invokefunction_of_any_contract(contract_for_rent_hash, 'anyUpdate', [nef_file, manifest, 'hello1', [1]], relay=False)
+client.invokefunction_of_any_contract(contract_for_rent_hash0, 'anyUpdate', [nef_file, manifest, 'hello1', [1]], relay=False)
 client.print_previous_result()
-client.invokefunction_of_any_contract(contract_for_rent_hash, 'anyUpdate0', [nef_file, manifest, 'putNef'], relay=False)
+client.invokefunction_of_any_contract(contract_for_rent_hash0, 'anyUpdate0', [nef_file, manifest, 'putNef'], relay=False)
 client.print_previous_result()
 
 user1_signer = Signer(user1_hash, scopes=WitnessScope.Global)
 user1client = TestClient(target_url, renter_contract_hash, user1_hash, user1_address, 'user1.json', '1')
 user1client.openwallet()
-user1client.invokefunction_of_any_contract(contract_for_rent_hash, 'anyUpdate0', [nef_file, manifest, 'putNef'], do_not_raise_on_result=True)
+user1client.invokefunction_of_any_contract(contract_for_rent_hash0, 'anyUpdate0', [nef_file, manifest, 'putNef'], do_not_raise_on_result=True)
 user1client.invokefunction('requestRental', params=[user1_hash, user1_hash, 100000], signers=[user1_signer])
 user1client.print_previous_result()

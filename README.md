@@ -6,9 +6,9 @@ This contract is expected to be a free public service, as well as an amazing sho
 
 Also `AnyUpdateSafe.py` is provided on the testnet at `0xb0b0d4bad5a8c17967ee30d997f0f1759c742402`. You can write on any key safely with this contract, though overwriting the keys `original_nef_file` and `original_manifest` is noneffective. `AnyUpdateSafe` costs more GAS than `AnyUpdate`.
 
-Then `AnyUpdateShort.py` on testnet at `0x01918c892feb3056994aa4f70640d7b978eb2c5d` (with `findStorage` method supported!) gives a flexible way to give arguments to your methods. Note that a shorter contract does not always save your fee. Usually the fee is minimized when the length of my contract is close to that of yours.  We also have `AnyUpdateShortSafe.py` on testnet at `0xbb0bfd9b5f1cdab4318012ff80b6f0c51778a2d4`.
+Then `AnyUpdateShort.py` on testnet at `0x7cfe35715b3b2b9f3bc696f7483077434158d601` (with `findStorage` method supported!) gives a flexible way to give arguments to your methods. Note that a shorter contract does not always save your fee. Usually the fee is minimized when the length of my contract is close to that of yours.  We also have `AnyUpdateShortSafe.py` on testnet at `0x5c1068339fae89eb1a743909d0213e1d99dc5dc9`.
 
-Finally there is an experimental project `AnyUpdateRenter.py` (`0x9cf19e43333a0b4513bd61e2316b40ecb9454a9b` on testnet) which allows you to rent contracts defined by `AnyUpdateSafeForRent.py` (instance 1 on testnet `0xb82bb0da46129f219d657cb6d7fbb22415efc502` that does not `findStorage`, instance 2 on testnet `0x6d13f393c90fa7182974a2b4d212e82bd0ccaf24` that supports `findStorage`).
+Finally there is an experimental project `AnyUpdateRenter.py` (`0x9cf19e43333a0b4513bd61e2316b40ecb9454a9b` on testnet) which allows you to rent contracts defined by `AnyUpdateSafeForRent.py` (instance 1 on testnet `0xb82bb0da46129f219d657cb6d7fbb22415efc502` that does not `findStorage`, instance 2 on testnet `0x6d13f393c90fa7182974a2b4d212e82bd0ccaf24` that supports `findStorage`, instance 3 on testnet `0xc2319a0e9c469598ba8c9425b56bcc39315c4c3e` that supports `findStorage` and `updateAndCallAnother`).
 
 The test `tests/update_test.py`  using `Neo3vm` will not succeed because `_deploy` is an invalid method name. So just try an RPC test!
 
