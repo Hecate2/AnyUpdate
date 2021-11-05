@@ -3,7 +3,7 @@ from boa3.builtin.interop.iterator import Iterator
 from boa3.builtin import NeoMetadata, metadata, public
 from boa3.builtin.interop.contract import GAS, update_contract, call_contract
 from boa3.builtin.interop.runtime import time, executing_script_hash, calling_script_hash, check_witness
-from boa3.builtin.interop.storage import get, put, find, StorageMap, get_context
+from boa3.builtin.interop.storage import get, put, find, findoptions, StorageMap, get_context
 from boa3.builtin.type import UInt160
 
 context = get_context()
@@ -137,13 +137,13 @@ def requestRental(payer: UInt160, tenant: UInt160, rental_time: int) -> UInt160:
     :param rental_time: rent for how many milliseconds
     :return: the contract address assigned to the tenant
     """
-    iterator = find(b'expire')
+    iterator = find(b'expire', context, findoptions.FindOptions.REMOVE_PREFIX)
     while iterator.next():
         expire_time = cast(bytes, iterator.value[1]).to_int()
         if expire_time < time:
             assert call_contract(GAS, 'transfer', [payer, executing_script_hash, cast(int, get(b'price')) * rental_time, None])
             key_bytes = cast(bytes, iterator.value[0])
-            key_bytes = key_bytes[6:]  # remove b'expire' at the beginning of the key
+            # key_bytes = key_bytes[6:]  # remove b'expire' at the beginning of the key
             rented_contract = cast(UInt160, StorageMap(context, b'address').get(key_bytes))
             new_expire_time = time + rental_time
             StorageMap(context, b'expire').put(key_bytes, new_expire_time)
