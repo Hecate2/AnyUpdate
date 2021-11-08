@@ -138,16 +138,27 @@ def requestRental(payer: UInt160, tenant: UInt160, rental_time: int, desired_con
     :param desired_contract_ids: which contract ids would you like to rent
         if no contract in this list available, then raise Exception
         leave it [] to allow all contracts
+        if you see an exception:
+        "Specified argument was out of the range of valid values."
+        when calling this method,
+        then you probably specified a wrong index of contract in `desired_contract_ids`
     :return: the contract address assigned to the tenant
     """
+    expire_storage_map = StorageMap(context, b'expire')
+    address_storage_map = StorageMap(context, b'address')
     if len(desired_contract_ids) > 0:
+        # zero_uint160 = UInt160(0)  # not necessary
         for contract_id in desired_contract_ids:
-            key = b'expire' + contract_id.to_bytes()
-            expire_time = cast(int, get(key))
-            if 0 < expire_time < time:
-                assert call_contract(GAS, 'transfer',
-                                     [payer, executing_script_hash, cast(int, get(b'price')) * rental_time, None])
-                rented_contract = cast(UInt160, StorageMap(context, b'address').get(key))
+            key = contract_id.to_bytes()
+            expire_time = cast(int, expire_storage_map.get(key))
+            if expire_time < time:
+                rented_contract = cast(UInt160, address_storage_map.get(key))
+                # if rented_contract == zero_uint160:
+                #     continue
+                # not necessary
+                assert call_contract(
+                    GAS, 'transfer',
+                    [payer, executing_script_hash, cast(int, get(b'price')) * rental_time, None])
                 new_expire_time = time + rental_time
                 StorageMap(context, b'expire').put(key, new_expire_time)
                 call_contract(rented_contract, 'setTenant', [tenant, new_expire_time])
@@ -157,12 +168,14 @@ def requestRental(payer: UInt160, tenant: UInt160, rental_time: int, desired_con
         while iterator.next():
             expire_time = cast(int, iterator.value[1])
             if expire_time < time:
-                assert call_contract(GAS, 'transfer', [payer, executing_script_hash, cast(int, get(b'price')) * rental_time, None])
+                assert call_contract(
+                    GAS, 'transfer',
+                    [payer, executing_script_hash, cast(int, get(b'price')) * rental_time, None])
                 key_bytes = cast(bytes, iterator.value[0])
                 # key_bytes = key_bytes[6:]  # remove b'expire' at the beginning of the key
-                rented_contract = cast(UInt160, StorageMap(context, b'address').get(key_bytes))
+                rented_contract = cast(UInt160, address_storage_map.get(key_bytes))
                 new_expire_time = time + rental_time
-                StorageMap(context, b'expire').put(key_bytes, new_expire_time)
+                expire_storage_map.put(key_bytes, new_expire_time)
                 call_contract(rented_contract, 'setTenant', [tenant, new_expire_time])
                 return rented_contract
     raise Exception('No contract available')
