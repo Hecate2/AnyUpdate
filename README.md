@@ -45,3 +45,10 @@ Additionally, if the length (in bytes) of your contract is approximately the sam
 
 **And certainly it costs NO GAS AT ALL if you do not relay your transaction.** Use `invokefunction(..., relay=False)` to cancel relaying with my test suite. 
 
+#### FAQ collection
+
+```
+Cannot Call Method Neo.SmartContract.Manifest.ContractMethodDescriptor Of Contract 0x01918c892feb3056994aa4f70640d7b978eb2c5d From Contract 0x01918c892feb3056994aa4f70640d7b978eb2c5d
+```
+
+This is probably related to the `ContractPermission` of your tested contract. `ContractPermission` is recorded in your contract's `manifest.json`. For C# users, just set `[ContractPermission("*", "*")]` and re-compile.
