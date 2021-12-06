@@ -51,4 +51,4 @@ Additionally, if the length (in bytes) of your contract is approximately the sam
 Cannot Call Method Neo.SmartContract.Manifest.ContractMethodDescriptor Of Contract 0x01918c892feb3056994aa4f70640d7b978eb2c5d From Contract 0x01918c892feb3056994aa4f70640d7b978eb2c5d
 ```
 
-This is probably related to the `ContractPermission` of your tested contract. `ContractPermission` is recorded in your contract's `manifest.json`. For C# users, just set `[ContractPermission("*", "*")]` and re-compile.
+This is probably related to the `ContractPermission` of your tested contract. `ContractPermission` is recorded in your contract's `manifest.json`. For C# users, just set `[ContractPermission("*", "*")]` and re-compile. In rare cases you might be using an old version of `Rpcserver.dll` with a new version of neo-cli, where you should re-compile `Rpcserver.dll` with a matching version, and paste Rpcserver.dll to `bin\Debug\net6.0` directory of your neo-node.
