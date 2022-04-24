@@ -12,7 +12,7 @@ Finally there is an experimental project `AnyUpdateRenter.py` (`0x9cf19e43333a0b
 
 The test `tests/update_test.py`  using `Neo3vm` will not succeed because `_deploy` is an invalid method name. So just try an RPC test!
 
-The test suite in this repository will not be maintained in the future, because it is a duplicate of that in https://github.com/Hecate2/neo-ruler/ . 
+The test suite in this repository will not be maintained in the future, because it is a duplicate of that in https://github.com/Hecate2/neo-test-client . 
 
 #### Usage
 
