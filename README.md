@@ -1,6 +1,12 @@
+### THE CONTRACT ADDRESSES MENTIONED IN THIS README ARE INVALID, BECAUSE TESTNET T4 HAS BEEN SHUT DOWN！
+
+### THIS IS AN OUTDATED TESTING TOOL (THOUGH IT MAY NOT BE TOTALY USELESS, AND MAY HAVE OTHER APPLICATIONS).
+
+#### For best testing experience on Neo blockchain, use [Fairy](https://github.com/Hecate2/neo-fairy-test/). 
+
 Not willing to deploy a new smart contract on Neo at a cost of 10 GAS? Use https://github.com/Hecate2/AnyUpdate that updates my contract to be yours, and invoke your own function! The storage written by you will be preserved by my contract!
 
-The leading actor in this repo is `AnyUpdate.py`. Try it now at `0x68740b907e4fcb265c5ad339c38251b6f843577a` on the testnet!
+The leading actor in this repo is `AnyUpdate.py`. Try it now at `0x68740b907e4fcb265c5ad339c38251b6f843577a` on testnet T4!
 
 This contract is expected to be a free public service, as well as an amazing showcase of smart contract self-updating. You may store anything in the contract (but the values might be overwritten by others). **Please do not overwrite the keys `original_nef_file` and `original_manifest` in the storage.**
 
